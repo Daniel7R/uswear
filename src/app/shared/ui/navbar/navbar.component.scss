@@ -1,0 +1,46 @@
+@import "../../../../assets/styles/variables";
+
+.layout-topbar {
+    background-color: $primary-color ;
+
+    div.search-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto;
+    }
+
+    .search-container {
+        .p-inputtext {
+            padding: 8px;
+            border: 1px solid transparent;
+            border-radius: 8px;
+            max-width: 50rem;
+            min-width: 25rem;
+            width: 100% !important;
+            background: $terciary-color;
+
+            &::placeholder{
+                color: $secondary-color;
+            }
+        }
+
+        .p-button.p-button-icon-only{
+            margin-left: -30px;
+            background: transparent;
+            border: 0px;
+            color: $secondary-color;
+        }
+    }
+
+    .layout-topbar-logo {
+        >img {
+            height: 3.7rem;
+        }
+
+        span {
+            color: $secondary-color;
+            font-size: 2.2rem;
+        }
+    }
+}

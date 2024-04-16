@@ -1,0 +1,32 @@
+@import "../../../../../assets/styles/variables";
+
+:host ::ng-deep .p-card {
+    background: $pink-color;
+    max-width: 260px;
+    min-width: 260px;
+    width: 100%;
+    .card-content{
+        margin: 10px 8px;
+
+        h3, h4, h2{
+            color: $secondary-color;
+        }
+    }
+    &-header {
+        display: flex;
+        justify-content: center;
+        img {
+            margin-top: 15px;
+            max-width: 250px;
+            min-width: 250px;
+            width: 100%;
+            object-fit: cover;
+        }
+    }
+
+    &-footer {
+        display: flex; 
+        justify-content: center;
+        padding-bottom: 15px;
+    }
+}

@@ -1,0 +1,15 @@
+<p-card>
+    <ng-template pTemplate="header">
+        <img alt="Card" [src]="'https://primefaces.org/cdn/primeng/images/demo/product/'+product['image']" />
+    </ng-template>
+    <div class="card-content">
+        <h3>{{product.name}}</h3>
+        <h4>{{product.description}}</h4>
+        <h2>{{product.price |currency }} COP</h2>
+    </div>
+    <ng-template pTemplate="footer">
+        <p-button label="Save" icon="pi pi-check"></p-button>
+        <p-button label="Save" icon="pi pi-check"></p-button>
+        <p-button label="Cancel" icon="pi pi-times" styleClass="p-button-secondary"></p-button>
+    </ng-template>
+</p-card>
