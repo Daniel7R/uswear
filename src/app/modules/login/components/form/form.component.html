@@ -1,0 +1,24 @@
+<form class="form-container" (ngSubmit)="login()">
+    <h4>Ingresar</h4>
+    <p>con cuenta de Google o Facebook</p>
+    <div class="buttons-container">
+        <button class="btn" (click)="loginGoogle()"> Google</button>
+        <button class="btn" (click)="loginFacebook()"> Facebook</button>
+    </div>
+    <!-- <div class="card flex justify-content-center"> -->
+        <p-floatLabel>
+            <input pInputText id="username" [(ngModel)]="username" [ngModelOptions]="{standalone:true}" />
+            <label for="username">Correo</label>
+        </p-floatLabel>
+        <!-- </div> -->
+        <!-- <div class="card flex justify-content-center"> -->
+            <span class="p-float-label">
+                <p-password id="username" [(ngModel)]="password" [ngModelOptions]="{standalone:true}" />
+                <label for="username">Contraseña</label>
+        </span>
+    <!-- </div> -->
+    <button pButton label="Ingresar"></button>
+    <a>Registrarme</a>
+    <a>Olvidé mi Contraseña</a>
+</form>
+<p-toast position="top-center" ></p-toast>
