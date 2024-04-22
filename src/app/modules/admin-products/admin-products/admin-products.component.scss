@@ -1,0 +1,15 @@
+@import "../../../../assets/styles/variables";
+
+:host ::ng-deep .p-tabview-nav{
+    display: flex;
+    justify-content: center;
+    
+    li{
+        .p-tabview-nav-link{
+            color: $secondary-color;
+        }
+        .p-tabview-selected {
+            border-color: $secondary-color !important;
+        }
+    }
+}

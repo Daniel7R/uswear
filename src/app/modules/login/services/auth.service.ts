@@ -27,6 +27,10 @@ export class AuthService {
     })
     return from(promise)
   }
+
+  getCurrentUser(){
+    return this._firabaseAuth.currentUser;
+  }
   loginWithGoogle(){
     const promise=  signInWithPopup(this._firabaseAuth, new GoogleAuthProvider()).then(response => {
       console.log(response);

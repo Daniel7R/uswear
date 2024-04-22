@@ -34,8 +34,8 @@ export const appConfig: ApplicationConfig = {
     [
       provideFirebaseApp(() => initializeApp(firebaseConfig)), 
       provideAuth(() => getAuth()),
-      // provideFirestore(() => getFirestore()),
-      // provideStorage(() => getStorage())
+      provideFirestore(() => getFirestore()),
+      provideStorage(() => getStorage())
     ]
   ),
  importProvidersFrom([ BrowserModule]),

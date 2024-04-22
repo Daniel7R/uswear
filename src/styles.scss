@@ -10,3 +10,10 @@ $gutter: 1rem; //for primeflex grid system
 
 /* Demos */
 @import "assets/styles/code.scss";
+
+.flex-col{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}

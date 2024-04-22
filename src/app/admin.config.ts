@@ -1,0 +1,1 @@
+export const ADMINS= ["carlos@gmail.com"]

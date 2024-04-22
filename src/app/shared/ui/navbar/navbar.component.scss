@@ -28,7 +28,6 @@
         .p-button.p-button-icon-only{
             margin-left: -30px;
             background: transparent;
-            border: 0px;
             color: $secondary-color;
         }
     }
@@ -42,5 +41,22 @@
             color: $secondary-color;
             font-size: 2.2rem;
         }
+    }
+}
+
+.router{
+    color: $secondary-color;
+    transition: all 1 ease;
+
+    &:hover{
+        opacity: 0.8;
+    }
+
+    &:active{
+        opacity: 0.7;
+    }
+
+    &:link{
+        opacity: 0.8;
     }
 }

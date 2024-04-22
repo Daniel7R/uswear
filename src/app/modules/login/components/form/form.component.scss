@@ -34,6 +34,7 @@
             width: 80%;
             border-radius: 7px;
             transition: all 1s ease;
+            cursor: pointer;
 
             &:nth-child(1) {
                 background-color: $secondary-color;
@@ -57,11 +58,13 @@
         }
     }
     .p-button{
+        cursor: pointer;
         transition: all 1s ease;
         margin-top: 30px;
         width: 90%;
         background-color: $secondary-color;
         color: $terciary-color;
+        border: 0px solid transparent;
         &:hover{
             color: $secondary-color;
             background-color: $terciary-color;

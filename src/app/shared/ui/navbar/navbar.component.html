@@ -15,7 +15,8 @@
     </button>
 
     <div #topbarmenu class="layout-topbar-menu" >
-        <button pButton icon="pi pi-bars"></button>
-        <button pButton icon="pi pi-shopping-cart"></button>
+        <!-- <button pButton icon="pi pi-bars"></button> -->
+        <button *ngIf="isLogged" pButton icon="pi pi-shopping-cart"></button>
+        <a class="router" *ngIf="!isLogged" icon="pi pi-shopping-cart" [routerLink]="'/login'">Registrarse/Iniciar sesión</a>
     </div>
 </div>

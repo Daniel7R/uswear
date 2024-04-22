@@ -8,6 +8,7 @@ import { ToastModule } from 'primeng/toast';
 import {PasswordModule} from 'primeng/password'
 import { AuthService } from '../../services/auth.service';
 import { MessageService } from 'primeng/api';
+import { of, switchMap } from 'rxjs';
 
 
 @Component({
@@ -22,13 +23,19 @@ export class FormComponent {
   username: string ="";
   password: string ="";
 
-  constructor(private _authService: AuthService, private _msgService: MessageService){}
+  constructor( private _authService: AuthService, private _msgService: MessageService){}
 
   login(){
     try{
-      this._authService.login(this.username, this.password).subscribe(response=> {
-        this._msgService.add({ severity: 'info', detail: "Sesión iniciada" })
-        localStorage.setItem("user", response);
+      this._authService.login(this.username, this.password).pipe(
+        switchMap((response )=> {
+
+          this._msgService.add({ severity: 'info', detail: "Sesión iniciada" })
+          localStorage.setItem("user", response);
+          return of([])
+        })
+      ).subscribe(response=> {
+        localStorage.setItem("user", JSON.stringify(this._authService.getCurrentUser()))
       }, error=> {
         console.log(error);
         

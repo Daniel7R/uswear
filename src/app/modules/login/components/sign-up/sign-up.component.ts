@@ -9,6 +9,8 @@ import { PasswordModule } from 'primeng/password';
 import { ToastModule } from 'primeng/toast';
 import { AuthService } from '../../services/auth.service';
 import { RouterModule } from '@angular/router';
+import { Auth } from '@angular/fire/auth';
+import { of, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-sign-up',
@@ -19,18 +21,25 @@ import { RouterModule } from '@angular/router';
   providers: [AuthService, MessageService]
 })
 export class SignUpComponent {
+  auth: Auth | undefined;
   username: string = "";
   mail: string = "";
   password: string = "";
 
   constructor(private _authService: AuthService, private _msgService: MessageService) { }
   sigIn() {
-    this._authService.signup(this.mail, this.username, this.password).subscribe(response => {
+    this._authService.signup(this.mail, this.username, this.password).pipe(switchMap(()=> {
       this._msgService.add({ severity: 'info', detail: 'Usuario creado' })
+      console.log(this.auth?.currentUser);
+      return of([])
+    })).subscribe(response => {
+      let a=this._authService.getCurrentUser()
+      console.log(a);
+      
     },
       error => {
         this._msgService.add({ severity: 'error', detail: error })
-      }
+      },
     )
   }
 
