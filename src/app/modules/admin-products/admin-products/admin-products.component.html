@@ -1,7 +1,7 @@
 <app-navbar></app-navbar>
 <p-tabView>
     <p-tabPanel header="Pendientes por aprobación">
-        <app-table [type]="'pending'" [cols]="columnsPending" [data]="dataPending" [optStatus]="optStatusPending"></app-table>
+        <app-table [type]="'pending'" (isUpdated)="updatedItem($event)" [cols]="columnsPending" [data]="dataPending" [optStatus]="optStatusPending"></app-table>
     </p-tabPanel>
     <p-tabPanel header="En Venta">
         <app-table [type]="'stock'" [cols]="columnsStock" [data]="dataStock" [optStatus]="optStatusStock"></app-table>

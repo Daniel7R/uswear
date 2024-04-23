@@ -1,7 +1,9 @@
 import { Injectable, inject } from '@angular/core';
-import { Firestore, getDocs, collection, addDoc, query, DocumentData, where, setDoc } from '@angular/fire/firestore';
+import { Firestore, getDocs, collection, addDoc, query, DocumentData, where, doc, updateDoc } from '@angular/fire/firestore';
 import { Observable, from } from 'rxjs';
 import { ProductInventory } from '../models/product.interface';
+
+const PATH= `products`
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +22,19 @@ export class FirestoreService {
   addProduct(product: ProductInventory) {
     const docRef = addDoc(collection(this.firestore, 'products'), product);
     return from(docRef)
+  }
+
+  setProductId(idProduct:string){
+    const document= doc(this.firestore,PATH,idProduct)
+    const docRef= updateDoc(document, {id: idProduct})
+
+    return docRef
+  }
+  updateProductStatus(idProduct:string, newStatus: string){
+    const document= doc(this.firestore,PATH,idProduct)
+    const docRef= updateDoc(document, {inventoryStatus: newStatus})
+
+    return docRef
   }
   /**
  * Executes the query and returns the results as a `QuerySnapshot`.

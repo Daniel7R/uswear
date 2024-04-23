@@ -26,9 +26,10 @@
         }
 
         .p-button.p-button-icon-only{
-            margin-left: -30px;
+            margin-left: -40px;
             background: transparent;
             color: $secondary-color;
+            border-color: transparent;
         }
     }
 
@@ -59,4 +60,10 @@
     &:link{
         opacity: 0.8;
     }
+}
+.p-button.btn{
+    background: $secondary-color !important;
+    border-color: transparent;
+    padding: 10px 8px;
+    margin-left: 10px;
 }

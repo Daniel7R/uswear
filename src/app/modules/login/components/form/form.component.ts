@@ -9,12 +9,14 @@ import {PasswordModule} from 'primeng/password'
 import { AuthService } from '../../services/auth.service';
 import { MessageService } from 'primeng/api';
 import { of, switchMap } from 'rxjs';
+import { Router, RouterModule } from '@angular/router';
+import { ADMINS } from '../../../../admin.config';
 
 
 @Component({
   selector: 'app-form',
   standalone: true,
-  imports: [FormsModule,  ButtonModule, FloatLabelModule,InputTextModule, MessagesModule, PasswordModule,ToastModule],
+  imports: [FormsModule, RouterModule,  ButtonModule, FloatLabelModule,InputTextModule, MessagesModule, PasswordModule,ToastModule],
   templateUrl: './form.component.html',
   styleUrl: './form.component.scss',
   providers: [AuthService, MessageService]
@@ -23,7 +25,7 @@ export class FormComponent {
   username: string ="";
   password: string ="";
 
-  constructor( private _authService: AuthService, private _msgService: MessageService){}
+  constructor( private _authService: AuthService, private _msgService: MessageService, private _router: Router){}
 
   login(){
     try{
@@ -35,7 +37,12 @@ export class FormComponent {
           return of([])
         })
       ).subscribe(response=> {
-        localStorage.setItem("user", JSON.stringify(this._authService.getCurrentUser()))
+        localStorage.setItem("user", JSON.stringify(this._authService.getCurrentUser()));
+        if(ADMINS.includes(this.username)){
+          this._router.navigate([`/admin`])
+          return
+        }
+        this._router.navigate([`/`])
       }, error=> {
         console.log(error);
         

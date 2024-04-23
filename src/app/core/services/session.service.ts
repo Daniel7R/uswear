@@ -1,11 +1,12 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Session } from '../models/session.model';
+import { AuthService } from '../../modules/login/services/auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SessionService {
-
+  authService= inject(AuthService)
   constructor() { }
 
   getCurrentSession(): Session| undefined | null {
@@ -14,5 +15,10 @@ export class SessionService {
       return JSON.parse(sessionData) as Session;
     }
     return null;
+  }
+
+  closeSession(): void {
+    localStorage.removeItem('user');
+    this.authService.logout()
   }
 }

@@ -12,4 +12,4 @@ export interface ProductInventory extends Product{
 }
 
 
-export type Status= 'In Inventory'|'Sold Out' |'Pending'| 'Delivered';
+export type Status= 'In Inventory'|'Sold Out' |'Pending'| 'Delivered' | 'Approved' | 'Rejected' | 'For Delivery';

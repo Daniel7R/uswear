@@ -6,7 +6,7 @@
     <div class="search-container">
         <p-inputGroup>
             <input type="text" pInputText placeholder="Keyword" />
-            <button type="button" pButton icon="pi pi-search" class="p-button-warning"></button>
+            <button type="button" pButton icon="pi pi-search" class="p-button"></button>
         </p-inputGroup>
     </div>
 
@@ -16,7 +16,9 @@
 
     <div #topbarmenu class="layout-topbar-menu" >
         <!-- <button pButton icon="pi pi-bars"></button> -->
-        <button *ngIf="isLogged" pButton icon="pi pi-shopping-cart"></button>
+        <button class="btn" *ngIf="isLogged" pButton icon="pi pi-shopping-cart"></button>
         <a class="router" *ngIf="!isLogged" icon="pi pi-shopping-cart" [routerLink]="'/login'">Registrarse/Iniciar sesión</a>
+        <button class="btn" pButton *ngIf="isLogged" icon="pi pi-sign-out" (click)="closeSession()"></button>
     </div>
 </div>
+<p-toast position="top-center"></p-toast>

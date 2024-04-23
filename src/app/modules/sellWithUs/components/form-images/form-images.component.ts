@@ -86,11 +86,15 @@ export class FormImagesComponent {
    
     
     (await this.uploadFile(fileupload)).subscribe(response => {
-      console.log(response);
       this._storageService.dataUrl$.subscribe(url => {
         productToAdd.image = url;
-
+        
         this._firestoreService.addProduct(productToAdd).subscribe((response) => {
+          const productCreatedId=response['id']
+          console.log(productCreatedId);
+          this._firestoreService.setProductId(productCreatedId).then(responseProduct=>{
+            console.log(responseProduct);
+          })
           this.fileUploadComponent.clear()
           this.form.reset();
           this._messageService.add({ severity: 'success', detail: `Producto creado` })
