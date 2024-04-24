@@ -1,0 +1,74 @@
+<form class="container" style="height: 100%;">
+    <h3>CARRITO DE COMPRAS</h3>
+    <p-divider></p-divider>
+    <div class="checkout-container">
+        <div class="product-container">
+            <div class="products">
+                <div class="headers">
+                    <h3>Producto</h3>
+                    <h3>Precio</h3>
+                    <h3>ACCIÓN</h3>
+                </div>
+                <p-divider></p-divider>
+                <div class="items">
+                    <div class="img-container">
+                        <img src="./../../../../../assets/img/chaqueta1.jpeg" alt="">
+                        <p>Chaqueta</p>
+                    </div>
+                    <p>{{300000 | currency}} COP</p>
+                    <button pButton label="ELIMINAR"></button>
+                </div>
+            </div>
+            <h3>CONFIRMAR INFORMACIÓN DE ENVÍO</h3>
+            <div class="confirmation">
+               <div class="child">
+                    <label for="phone">Teléfono</label>
+                    <input pInputText id="phone" />
+                </div>
+                <p-divider></p-divider>
+                <div class="child">
+                    <label for="address">Dirección</label>
+                    <input pInputText id="address" />
+                </div>
+                <p-divider></p-divider>
+                <div class="child">
+                   <label for="neighborhood">Barrio o Municipio</label>
+                   <input pInputText id="neighborhood" />
+               </div>
+            </div>
+        </div>
+        <div class="summary">
+            <h4>RESUMEN DE PEDIDO</h4>
+            <p-divider></p-divider>
+            <div class="summary-childs">
+                <h5>Cantidad de productos</h5>
+                <p>1</p>
+            </div>
+            <p-divider></p-divider>
+            <div class="summary-childs">
+                <h5>Subtotal:</h5>
+                <p>{{300000 |currency:'COP'}}</p>
+            </div>
+            <p-divider></p-divider>
+            <div class="summary-childs">
+                <div>
+                    <h5>Envío</h5>
+                    <span>costo por defecto para todos los envíos</span>
+                </div>
+                <p>{{15000 |currency:'COP'}}</p>
+            </div>
+            <p-divider></p-divider>
+
+            <div class="summary-childs">
+                <h5>Total a pagar:</h5>
+                <p>{{315000| currency: 'COP'}}</p>
+            </div>
+            <div class="summary-childs">
+                <div></div>
+                <button pButton type="submit" label="Confirmar"></button>
+            </div>
+
+        </div>
+        
+    </div>
+</form>

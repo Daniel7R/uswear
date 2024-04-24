@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { Firestore, getDocs, collection, addDoc, query, DocumentData, where, doc, updateDoc } from '@angular/fire/firestore';
+import { Firestore, getDocs, collection, addDoc, query, DocumentData, where, doc, updateDoc, limit } from '@angular/fire/firestore';
 import { Observable, from } from 'rxjs';
 import { ProductInventory } from '../models/product.interface';
 
@@ -46,6 +46,20 @@ export class FirestoreService {
  */
   async getProducts(statuses?: string[]): Promise<Observable<DocumentData>>{
     let querySnapshot=(await getDocs(query(collection(this.firestore, 'products'))))
+    if(statuses!== undefined && statuses?.length>0){
+      querySnapshot=(
+        await getDocs(
+          query(
+            collection(this.firestore, 'products'), 
+            where('inventoryStatus', 'in', statuses))));
+    }
+
+    const data= querySnapshot.docs.map(products=> products.data())
+    return from([data])
+  }
+
+  async getProductsWithLimit(limite: number,statuses?: string[]): Promise<Observable<DocumentData>>{
+    let querySnapshot=(await getDocs(query(collection(this.firestore, 'products'),limit(limite))))
     if(statuses!== undefined && statuses?.length>0){
       querySnapshot=(
         await getDocs(

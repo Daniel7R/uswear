@@ -2,12 +2,12 @@
     <ng-template let-product pTemplate="item">
         <div class="border-1 surface-border border-round m-2 text-center py-5 px-3 product-container">
             <div>
-                <h4 class="mb-1">{{ product.name }}</h4>
-                <h6>Vendido por: {{product.description}}</h6>
+                <h4 class="mb-1">{{ product.productName }}</h4>
+                <h6>Vendido por: {{product.seller}}</h6>
                 <p-button  label="Ver ahora"></p-button>
             </div>
             <div class="mb-3">
-                <img src="https://primefaces.org/cdn/primeng/images/demo/product/{{ product.image }}"
+                <img src="{{ product.image }}"
                     [alt]="product.name" class="w-6 shadow-2" />
             </div>
         </div>

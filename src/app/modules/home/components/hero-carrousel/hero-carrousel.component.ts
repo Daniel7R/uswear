@@ -1,9 +1,12 @@
 import { CUSTOM_ELEMENTS_SCHEMA, Component, OnInit } from '@angular/core';
 import { CarouselModule } from 'primeng/carousel'
-import { Product } from '../../interfaces/produc.interface';
+
 import { ProductService } from '../../services/product.service';
 import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
+import { FirestoreService } from '../../../../shared/services/firestore.service';
+import { StatusEnum } from '../../../../shared/models/status.enum';
+import { ProductInventory } from '../../../../shared/models/product.interface';
 
 @Component({
   selector: 'app-hero-carrousel',
@@ -11,18 +14,18 @@ import { ButtonModule } from 'primeng/button';
   imports: [CommonModule, CarouselModule, ButtonModule ],
   templateUrl: './hero-carrousel.component.html',
   styleUrl: './hero-carrousel.component.scss',
-  providers: [ProductService],
+  providers: [FirestoreService],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class HeroCarrouselComponent implements OnInit {
-  products: Product[] | undefined=[];
+  products: ProductInventory[] | undefined=[];
   responsiveOptions: any[] | undefined;
 
-  constructor(private _productService: ProductService) { }
+  constructor(private _firestoreService: FirestoreService) { }
 
-  ngOnInit(): void {
-    this._productService.getProductsSmall().then((products) => {
-      this.products = products;
+  async ngOnInit() {
+    await (await this._firestoreService.getProductsWithLimit(5, [StatusEnum.APPROVED, StatusEnum.IN_INVENTORY])).subscribe((products) => {
+      this.products = products as ProductInventory[];
       console.log(products);
       
     });

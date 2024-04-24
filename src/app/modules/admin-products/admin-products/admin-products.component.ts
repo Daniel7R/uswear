@@ -108,6 +108,7 @@ export class AdminProductsComponent implements OnInit {
   }
   
   updatedItem(event: string){
+    console.log(event);
     this.updateProductsResponse() 
   }
 }
