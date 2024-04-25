@@ -1,10 +1,11 @@
 import { Routes } from '@angular/router';
 import { protectorGuard } from './core/guards/protector.guard';
+import { authValidationGuard } from './core/guards/auth-validation.guard';
 
 export const routes: Routes = [
     {
         path: "",
-        loadComponent: () => import("./modules/home/home/home.component").then(m => m.HomeComponent)
+        loadComponent: () => import("./modules/home/home/home.component").then(m => m.HomeComponent),
     },
     {
         path: "login",
@@ -22,18 +23,22 @@ export const routes: Routes = [
     {
         path: "orders",
             loadComponent: () => import("./modules/orders/orders/orders.component").then(m => m.OrdersComponent),
+        canActivate: [protectorGuard,authValidationGuard]
     },
     {
         path: "my-orders",
             loadComponent: () => import("./modules/myOrders/my-orders/my-orders.component").then(m => m.MyOrdersComponent),
-    },
+            canActivate: [authValidationGuard]
+        },
     {
         path: "checkout",
         loadComponent: () => import("./modules/checkout/checkout/checkout.component").then(m => m.CheckoutComponent),
+        // canActivate: [authValidationGuard]
     },
     {
         path: "favorites",
         loadComponent: () => import("./modules/myFavorites/my-favorites/my-favorites.component").then(m => m.MyFavoritesComponent),
+        canActivate: [authValidationGuard]
     },
     {
         path: "product/:id",

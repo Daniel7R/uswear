@@ -1,16 +1,28 @@
 import { createReducer, on } from '@ngrx/store';
-import { ADD_PRODUCT, RESET } from './product.actions';
+import { ADD_PRODUCT, DELETE_PRODUCT, RESET } from './product.actions';
 
-import { Product } from './../models/product.model';
+import { ProductToCart } from './../../shared/models/product.interface';
+
+const products: ProductToCart[]=[];
 
 export const initialState={
-    products: []
+    productsCart: products
 };
 
 export const productReducer= createReducer(initialState, 
     on(ADD_PRODUCT, (state, {item})=> {
         return{
-        ...state, arr: [...state.products, item]
+        ...state, productsCart: [...state.productsCart, item]
     }} ),
-    on(RESET, (state)=> ( {...state, products: []})),
+    on(RESET, (state)=> ( {...state, productsCart: []})),
+    on(DELETE_PRODUCT, (state, {idx})=> {
+        let splicedProducts= state.productsCart.filter((item, idxItem)=>(idxItem!==idx))
+        
+        console.log(state);
+        return{...state, productsCart:  splicedProducts}
+    }),
+    // on(GET_PRODUCTS, (state)=> {
+    //     console.log(state);
+    //     return {products: state.products}
+    // }),
 )

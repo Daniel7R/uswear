@@ -1,4 +1,4 @@
-<form class="container" style="height: 100%;">
+<form (ngSubmit)="handleSubmit()" class="container" style="height: 100%;">
     <h3>CARRITO DE COMPRAS</h3>
     <p-divider></p-divider>
     <div class="checkout-container">
@@ -10,31 +10,46 @@
                     <h3>ACCIÓN</h3>
                 </div>
                 <p-divider></p-divider>
+                @if (products.length>0) {
+                @for (product of products; track $index) {
                 <div class="items">
                     <div class="img-container">
-                        <img src="./../../../../../assets/img/chaqueta1.jpeg" alt="">
-                        <p>Chaqueta</p>
+                        <img [src]="product.image" alt="">
+                        <p>{{product.productName}}</p>
                     </div>
-                    <p>{{300000 | currency}} COP</p>
+                    <p>{{product.price| currency: "COP"}} </p>
                     <button pButton label="ELIMINAR"></button>
                 </div>
+                }
+                }
+                @else {
+                <div class="flex-row">
+
+                    <h1 style="color: #344f4a;">Uppss tu carrito se encuentra vacío
+                    </h1><span class="loader">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </span>
+                </div>
+                }
             </div>
             <h3>CONFIRMAR INFORMACIÓN DE ENVÍO</h3>
             <div class="confirmation">
-               <div class="child">
+                <div class="child">
                     <label for="phone">Teléfono</label>
-                    <input pInputText id="phone" />
+                    <input pInputText id="phone" [(ngModel)]="phone" [ngModelOptions]="{standalone:true}" />
                 </div>
                 <p-divider></p-divider>
                 <div class="child">
                     <label for="address">Dirección</label>
-                    <input pInputText id="address" />
+                    <input pInputText id="address" [(ngModel)]="address" [ngModelOptions]="{standalone:true}" />
                 </div>
                 <p-divider></p-divider>
                 <div class="child">
-                   <label for="neighborhood">Barrio o Municipio</label>
-                   <input pInputText id="neighborhood" />
-               </div>
+                    <label for="neighborhood" >Barrio o Municipio</label>
+                    <input pInputText id="neighborhood" [(ngModel)]="neighborhood" [ngModelOptions]="{standalone:true}" />
+                </div>
             </div>
         </div>
         <div class="summary">
@@ -42,12 +57,12 @@
             <p-divider></p-divider>
             <div class="summary-childs">
                 <h5>Cantidad de productos</h5>
-                <p>1</p>
+                <p>{{products.length}}</p>
             </div>
             <p-divider></p-divider>
             <div class="summary-childs">
                 <h5>Subtotal:</h5>
-                <p>{{300000 |currency:'COP'}}</p>
+                <p>{{subtotal |currency:'COP'}}</p>
             </div>
             <p-divider></p-divider>
             <div class="summary-childs">
@@ -55,13 +70,18 @@
                     <h5>Envío</h5>
                     <span>costo por defecto para todos los envíos</span>
                 </div>
-                <p>{{15000 |currency:'COP'}}</p>
+                @if (products.length>0) {
+                <p>{{sendingCost |currency:'COP'}}</p>
+                }
+                @else {
+                <p>{{0 |currency:'COP'}}</p>
+                }
             </div>
             <p-divider></p-divider>
 
             <div class="summary-childs">
                 <h5>Total a pagar:</h5>
-                <p>{{315000| currency: 'COP'}}</p>
+                <p>{{total| currency: 'COP'}}</p>
             </div>
             <div class="summary-childs">
                 <div></div>
@@ -69,6 +89,8 @@
             </div>
 
         </div>
-        
+
     </div>
 </form>
+
+<p-toast position="top-center"></p-toast>

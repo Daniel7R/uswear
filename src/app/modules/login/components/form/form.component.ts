@@ -54,11 +54,28 @@ export class FormComponent {
   }
 
   loginGoogle(){
-    this._authService.loginWithGoogle().subscribe(response => {
-      console.log(response);
-    }, error => {
-      this._msgService.add({severity: 'error', detail: error})
-    })
+    try{
+
+      this._authService.loginWithGoogle().pipe(
+        switchMap(response => {
+          this._msgService.add({ severity: 'info', detail: "Sesión iniciada" })
+          localStorage.setItem("user", response);
+          return of([])
+        })
+      ).subscribe(response => {
+        localStorage.setItem("user", JSON.stringify(this._authService.getCurrentUser()));
+        if(ADMINS.includes(this.username)){
+          this._router.navigate([`/admin`])
+          return
+        }
+        this._router.navigate([`/`])
+      }, error => {
+        this._msgService.add({severity: 'error', detail: error})
+      })
+    } catch(ex: any){
+      console.log(ex);
+      
+    }
   }
   loginFacebook(){
     this._authService.loginWithGoogle().subscribe(response => {

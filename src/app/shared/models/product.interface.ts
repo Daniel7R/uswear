@@ -12,4 +12,8 @@ export interface ProductInventory extends Product{
 }
 
 
+export interface ProductToCart extends ProductInventory{
+    inCart?:boolean;
+}
+
 export type Status= 'In Inventory'|'Sold Out' |'Pending'| 'Delivered' | 'Approved' | 'Rejected' | 'For Delivery';

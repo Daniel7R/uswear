@@ -31,7 +31,7 @@ export class AuthService {
   getCurrentUser(){
     return this._firabaseAuth.currentUser;
   }
-  loginWithGoogle(){
+  loginWithGoogle(): Observable<any>{
     const promise=  signInWithPopup(this._firabaseAuth, new GoogleAuthProvider()).then(response => {
       console.log(response);
       
@@ -39,7 +39,7 @@ export class AuthService {
 
    return from(promise);
   }
-  loginWithFacebook(){
+  loginWithFacebook(): Observable<any>{
     const promise=  signInWithPopup(this._firabaseAuth, new FacebookAuthProvider()).then(response => {
       console.log(response);
     })
