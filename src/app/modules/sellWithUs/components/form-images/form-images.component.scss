@@ -90,3 +90,23 @@
         }
     }
 }
+
+:host ::ng-deep .p-dropdown {
+    min-width: 220px;
+    width: 100%;
+    background: $primary-color;
+    margin-bottom: 30px;
+    border-color: transparent;
+
+    .p-dropdown-items-wrapper{
+        border-radius: 0px 0px 10px 10px;
+        background-color: $primary-color;
+        color: $secondary-color;
+        
+        .p-highlight.p-focus{
+            color: $primary-color;
+            background-color: $secondary-color;
+
+        } 
+    }
+}

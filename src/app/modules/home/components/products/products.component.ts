@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, DoCheck, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 
 import { ProductService } from '../../services/product.service';
 import { ProductComponent } from '../product/product.component';
@@ -17,7 +17,7 @@ import { SessionService } from '../../../../core/services/session.service';
   styleUrl: './products.component.scss',
   providers: [ProductService, FirestoreService, SessionService]
 })
-export class ProductsComponent implements OnInit, OnChanges {
+export class ProductsComponent implements OnInit, OnChanges, DoCheck {
   products: ProductInventory[] | undefined;
   productsRender: ProductInventory[] | undefined;
   @Input() filterProduct:string='';
@@ -28,7 +28,6 @@ export class ProductsComponent implements OnInit, OnChanges {
   constructor(private _productService: FirestoreService, private _sessionService: SessionService) { }
  
   ngOnChanges(changes: SimpleChanges): void {
-    console.log(changes['filterProduct'].currentValue);
     if(changes['filterProduct']&& changes['filterProduct'].currentValue !== undefined){
       this.filterProduct=changes['filterProduct'].currentValue;
       
@@ -38,8 +37,11 @@ export class ProductsComponent implements OnInit, OnChanges {
     }
   }
 
-  async ngOnInit() {
+  ngDoCheck(): void {
     this.session= this._sessionService.getCurrentSession();
+  }
+
+  async ngOnInit() {
     
     (await this._productService.getProducts([StatusEnum.IN_INVENTORY, StatusEnum.APPROVED])).subscribe(response => {
       this.products = response as ProductInventory[];

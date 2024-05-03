@@ -30,39 +30,42 @@ export class AdminProductsComponent implements OnInit {
   columnsPending = [
     { field: 'image', header: 'Image' },
     { field: 'productName', header: 'Nombre Producto' },
+    { field: 'category', header: 'Categoría' },
     { field: 'seller', header: 'Vendedor' },
-    { field: 'seller', header: 'Teléfono' },
+    { field: 'phoneSeller', header: 'Teléfono' },
     { field: 'price', header: 'Precio' },
     { field: 'inventoryStatus', header: 'Estado' },
   ];
-  optStatusPending=[
-    StatusEnum.APPROVED,StatusEnum.PENDING, StatusEnum.REJECTED
+  optStatusPending = [
+    StatusEnum.APPROVED, StatusEnum.PENDING, StatusEnum.REJECTED
   ]
-  
+
   dataStock: ProductInventory[] = []
   columnsStock = [
     { field: 'image', header: 'Image' },
     { field: 'productName', header: 'Nombre Producto' },
+    { field: 'category', header: 'Categoría' },
     { field: 'seller', header: 'Vendedor' },
-    { field: 'seller', header: 'Teléfono' },
+    { field: 'phoneSeller', header: 'Teléfono' },
     { field: 'price', header: 'Precio' },
     { field: 'inventoryStatus', header: 'Estado' },
   ];
-  optStatusStock=[
-    StatusEnum.APPROVED,StatusEnum.IN_INVENTORY, StatusEnum.FOR_DELIVERY
+  optStatusStock= [
+    StatusEnum.APPROVED, StatusEnum.IN_INVENTORY, StatusEnum.FOR_DELIVERY
   ]
 
-  dataDelivery: ProductInventory[]=[];
+  dataDelivery: ProductInventory[] = [];
   columnsDelivery = [
     { field: 'image', header: 'Image' },
     { field: 'productName', header: 'Nombre Producto' },
+    { field: 'category', header: 'Categoría' },
     { field: 'seller', header: 'Vendedor' },
-    { field: 'seller', header: 'Teléfono' },
+    { field: 'phoneSeller', header: 'Teléfono' },
     { field: 'price', header: 'Precio' },
     { field: 'inventoryStatus', header: 'Estado' },
   ];
-  optStatusDelivery=[
-     StatusEnum.PENDING, StatusEnum.DELIVERED,StatusEnum.SOLD_OUT, StatusEnum.FOR_DELIVERY
+  optStatusDelivery = [
+    StatusEnum.PENDING, StatusEnum.DELIVERED, StatusEnum.SOLD_OUT, StatusEnum.FOR_DELIVERY
   ]
 
   constructor(private _authService: AuthService, private _firestoreService: FirestoreService) { }
@@ -71,44 +74,44 @@ export class AdminProductsComponent implements OnInit {
     let session = this._authService.getCurrentUser()
 
     if (session !== undefined && session !== null) {
-    
+
     }
 
     this.updateProductsResponse()
   }
 
-  async updateProductsResponse(){
+  async updateProductsResponse() {
     await this.getPendingProducts();
     await this.getStockProducts();
     await this.getDeliveryProducts();
   }
 
-  async getPendingProducts(){
+  async getPendingProducts() {
     (await this._firestoreService.getProducts([StatusEnum.PENDING])).subscribe(response => {
       console.log(response);
-      this.dataPending=response as ProductInventory[]
+      this.dataPending = response as ProductInventory[]
     }
     )
   }
 
-  async getStockProducts(){
+  async getStockProducts() {
     (await this._firestoreService.getProducts([StatusEnum.APPROVED, StatusEnum.IN_INVENTORY])).subscribe(response => {
       console.log(response);
-      this.dataStock=response as ProductInventory[]
+      this.dataStock = response as ProductInventory[]
     }
     )
   }
 
-  async getDeliveryProducts(){
+  async getDeliveryProducts() {
     (await this._firestoreService.getProducts([StatusEnum.SOLD_OUT, StatusEnum.FOR_DELIVERY])).subscribe(response => {
       console.log(response);
-      this.dataDelivery=response as ProductInventory[]
+      this.dataDelivery = response as ProductInventory[]
     }
     )
   }
-  
-  updatedItem(event: string){
+
+  updatedItem(event: string) {
     console.log(event);
-    this.updateProductsResponse() 
+    this.updateProductsResponse()
   }
 }

@@ -7,11 +7,12 @@ import { ButtonModule } from 'primeng/button';
 import { FirestoreService } from '../../../../shared/services/firestore.service';
 import { StatusEnum } from '../../../../shared/models/status.enum';
 import { ProductInventory } from '../../../../shared/models/product.interface';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-hero-carrousel',
   standalone: true,
-  imports: [CommonModule, CarouselModule, ButtonModule ],
+  imports: [CommonModule, RouterModule, CarouselModule, ButtonModule ],
   templateUrl: './hero-carrousel.component.html',
   styleUrl: './hero-carrousel.component.scss',
   providers: [FirestoreService],

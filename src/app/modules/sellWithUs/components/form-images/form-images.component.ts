@@ -11,11 +11,13 @@ import { StorageService } from '../../../../shared/services/storage.service';
 import { FirestoreService } from '../../../../shared/services/firestore.service';
 import { ProductInventory } from '../../../../shared/models/product.interface';
 import { StatusEnum } from '../../../../shared/models/status.enum';
+import { DropdownModule } from 'primeng/dropdown';
+import { Categories } from '../../../../shared/models/categorites.type';
 
 @Component({
   selector: 'app-form-images',
   standalone: true,
-  imports: [FileUploadModule, FloatLabelModule, FormsModule, InputTextModule, ReactiveFormsModule, ToastModule],
+  imports: [FileUploadModule, FloatLabelModule, FormsModule, InputTextModule, ReactiveFormsModule, DropdownModule, ToastModule],
   templateUrl: './form-images.component.html',
   styleUrl: './form-images.component.scss',
   providers: [MessageService, StorageService, FirestoreService]
@@ -30,12 +32,15 @@ export class FormImagesComponent {
 
   @ViewChild('fileUpload') fileUploadComponent!: FileUpload;
 
+  categories = ['Camisetas', 'Zapatos', 'Pantalones', 'Chaquetas', 'Camisas', 'Vestidos', 'Otros']
+
 
   constructor(private _fB: FormBuilder, private _messageService: MessageService, private _storageService: StorageService, private _firestoreService: FirestoreService) {
     this.form = _fB.group({
       seller: ['', Validators.required],
       phoneSeller: ['', Validators.required],
       productName: ['', Validators.required],
+      selectedCategory: [undefined, Validators.required],
       price: [null, Validators.required],
       image: [null, Validators.required]
     })
@@ -54,7 +59,7 @@ export class FormImagesComponent {
   }
 
   async handleSubmit(value: any) {
-    
+
     if (this.form.invalid) {
       this._messageService.add({ severity: 'error', detail: 'Formulario inválido' });
       return
@@ -66,7 +71,8 @@ export class FormImagesComponent {
       phoneSeller: this.form.controls['phoneSeller'].value,
       seller: this.form.controls['seller'].value,
       price: this.form.controls['price'].value,
-      inventoryStatus: StatusEnum.PENDING
+      inventoryStatus: StatusEnum.PENDING,
+      category: this.form.controls['selectedCategory'].value
     };
 
     this._storageService.dataToast$.subscribe(message => {
@@ -83,16 +89,16 @@ export class FormImagesComponent {
     const fileupload: File = this.form.controls['image'].value;
 
     //first upload
-   
-    
+
+
     (await this.uploadFile(fileupload)).subscribe(response => {
       this._storageService.dataUrl$.subscribe(url => {
         productToAdd.image = url;
-        
+
         this._firestoreService.addProduct(productToAdd).subscribe((response) => {
-          const productCreatedId=response['id']
+          const productCreatedId = response['id']
           console.log(productCreatedId);
-          this._firestoreService.setProductId(productCreatedId).then(responseProduct=>{
+          this._firestoreService.setProductId(productCreatedId).then(responseProduct => {
             console.log(responseProduct);
           })
           this.fileUploadComponent.clear()

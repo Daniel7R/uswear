@@ -1,3 +1,5 @@
+import { Categories } from "./categorites.type";
+
 interface Product{
     id?: string;
     image: string
@@ -9,6 +11,7 @@ export interface ProductInventory extends Product{
     seller: string
     phoneSeller: string
     inventoryStatus?: Status
+    category?: Categories;
 }
 
 

@@ -18,7 +18,7 @@
                         <p>{{product.productName}}</p>
                     </div>
                     <p>{{product.price| currency: "COP"}} </p>
-                    <button pButton label="ELIMINAR"></button>
+                    <button pButton label="ELIMINAR" (click)="deleteProduct($index)"></button>
                 </div>
                 }
                 }

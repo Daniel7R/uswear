@@ -4,7 +4,7 @@
             <div>
                 <h4 class="mb-1">{{ product.productName }}</h4>
                 <h6>Vendido por: {{product.seller}}</h6>
-                <p-button  label="Ver ahora"></p-button>
+                <button pButton [routerLink]="'/product/'+product['id']" label="Ver ahora"></button>
             </div>
             <div class="mb-3">
                 <img src="{{ product.image }}"

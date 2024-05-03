@@ -17,6 +17,7 @@
             <input pInputText id="price" formControlName="price" />
             <label for="price">Precio</label>
         </p-floatLabel>
+        <p-dropdown [options]="categories" formControlName="selectedCategory" [showClear]="true" placeholder="Categoría"></p-dropdown>
         <p-fileUpload #fileUpload auto="true" (onClear)="clearImage()" (onSelect)="onUpload($event)"  [multiple]="false" accept="image/*" maxFileSize="1000000">
             <ng-template pTemplate="toolbar">
                 <div class="py-3">Sube tu imagen</div>

@@ -33,7 +33,7 @@ export const routes: Routes = [
     {
         path: "checkout",
         loadComponent: () => import("./modules/checkout/checkout/checkout.component").then(m => m.CheckoutComponent),
-        // canActivate: [authValidationGuard]
+        canActivate: [authValidationGuard]
     },
     {
         path: "favorites",
@@ -41,8 +41,12 @@ export const routes: Routes = [
         canActivate: [authValidationGuard]
     },
     {
-        path: "product/:id",
+        path: "product/:idProduct",
         loadComponent: () => import("./modules/productDetails/product-detail/product-detail.component").then(m => m.ProductDetailComponent),
+    },
+    {
+        path: "impact",
+        loadComponent: () => import("./modules/impact/impact/impact.component").then(m => m.ImpactComponent),
     },
     {
         path: "*",

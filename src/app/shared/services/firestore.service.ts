@@ -2,8 +2,10 @@ import { Injectable, inject } from '@angular/core';
 import { Firestore, getDocs, collection, addDoc, query, DocumentData, where, doc, updateDoc, limit } from '@angular/fire/firestore';
 import { Observable, from } from 'rxjs';
 import { ProductInventory } from '../models/product.interface';
+import { Order } from '../models/order.interface';
 
 const PATH= `products`
+const PATH_ORDERS= `orders`
 
 @Injectable({
   providedIn: 'root'
@@ -71,4 +73,53 @@ export class FirestoreService {
     const data= querySnapshot.docs.map(products=> products.data())
     return from([data])
   }
+
+  async getProductsById(id: string): Promise<Observable<DocumentData>>{
+    let querySnapshot=(await getDocs(query(collection(this.firestore, 'products'), where('id','==',id))))
+
+    const data= querySnapshot.docs.map(products=> products.data())
+    return from([data])
+  }
+
+  async getProductsByIds(ids: string[]): Promise<Observable<DocumentData>>{
+    let querySnapshot=(await getDocs(query(collection(this.firestore, 'products'), where('id','in',ids))))
+
+    const data= querySnapshot.docs.map(products=> products.data())
+    return from([data])
+  }
+
+  CreateOrder(order: Order) {
+    const docRef = addDoc(collection(this.firestore, 'orders'), order);
+    return from(docRef)
+  }
+
+  setOrderId(idOrder:string){
+    const document= doc(this.firestore,PATH_ORDERS,idOrder)
+    const docRef= updateDoc(document, {idOrder: idOrder})
+
+    return docRef
+  }
+
+  async getOrderByUser(idUser: string): Promise<Observable<DocumentData>>{
+    let querySnapshot=(await getDocs(query(collection(this.firestore, 'orders'), where('user.idUser','==',idUser))))
+
+    const data= querySnapshot.docs.map(orders=> orders.data())
+    return from([data])
+  }
+
+  async getOrders(): Promise<Observable<DocumentData>>{
+    let querySnapshot=(await getDocs(query(collection(this.firestore, 'orders'))))
+
+    const data= querySnapshot.docs.map(orders=> orders.data())
+    return from([data])
+  }
+
+  
+  updateOrderStatus(idOrder:string,newStatus: boolean){
+    const document= doc(this.firestore,PATH_ORDERS,idOrder)
+    const docRef= updateDoc(document, {delivered: newStatus})
+
+    return docRef
+  }
+
 }

@@ -48,4 +48,16 @@
             }
         }
     }
+
+    tr{
+
+        background-color: $primary-color;
+    }
+    .p-paginator{
+        background-color: $primary-color;
+    }
+}
+
+.card{
+    background: $primary-color;
 }
