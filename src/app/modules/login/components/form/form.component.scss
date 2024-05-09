@@ -99,3 +99,18 @@
         width: 100%;
     }
 }
+
+:host ::ng-deep .p-dialog{
+    &-header{
+        background-color: $primary-color;
+    }
+    &-title{
+        background-color: $primary-color;
+    }
+    &-content{
+        background-color: $primary-color;
+    }
+    &-footer{
+        background-color: $primary-color;
+    }
+}

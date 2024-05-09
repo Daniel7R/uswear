@@ -7,8 +7,8 @@ import {
   signOut,
   signInWithPopup,
   GoogleAuthProvider,
-  UserCredential,
-  User,
+  sendPasswordResetEmail,
+  confirmPasswordReset,
   FacebookAuthProvider
 } from '@angular/fire/auth';
 import { Observable, from } from 'rxjs';
@@ -18,6 +18,7 @@ import { Observable, from } from 'rxjs';
 })
 export class AuthService {
   _firabaseAuth= inject(Auth)
+
   constructor() { }
 
   login(username: string, password: string): Observable<any>{
@@ -58,6 +59,21 @@ export class AuthService {
 
   signup(email: string, username:string,password: string): Observable<void> {
     const promise=  createUserWithEmailAndPassword(this._firabaseAuth,email, password).then(response=> updateProfile(response.user,{displayName: username} ));
+
+    return from(promise)
+  }
+
+  async resetPassword(email:string){
+    const promise= sendPasswordResetEmail(this._firabaseAuth, email);
+
+    return from(promise)
+  }
+
+
+  async confirmThePasswordReset(oobCode:string, newPassword:string){
+    if(!oobCode && !newPassword) return;
+
+    const promise= confirmPasswordReset(this._firabaseAuth, oobCode,newPassword);
 
     return from(promise)
   }

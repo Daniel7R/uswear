@@ -15,4 +15,8 @@ import { SignUpComponent } from '../sign-up/sign-up.component';
 })
 export class SectionComponent {
   isLogin: boolean=true;
+
+  handleLogin(value:boolean){
+    this.isLogin=value;
+  }
 }

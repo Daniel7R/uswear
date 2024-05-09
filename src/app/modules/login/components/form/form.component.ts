@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import {FloatLabelModule} from 'primeng/floatlabel'
@@ -10,13 +10,16 @@ import { AuthService } from '../../services/auth.service';
 import { MessageService } from 'primeng/api';
 import { of, switchMap } from 'rxjs';
 import { Router, RouterModule } from '@angular/router';
+
+import { DialogModule } from 'primeng/dialog';
+
 import { ADMINS } from '../../../../admin.config';
 
 
 @Component({
   selector: 'app-form',
   standalone: true,
-  imports: [FormsModule, RouterModule,  ButtonModule, FloatLabelModule,InputTextModule, MessagesModule, PasswordModule,ToastModule],
+  imports: [FormsModule, RouterModule,  ButtonModule, DialogModule, FloatLabelModule,InputTextModule, MessagesModule, PasswordModule,ToastModule],
   templateUrl: './form.component.html',
   styleUrl: './form.component.scss',
   providers: [AuthService, MessageService]
@@ -24,6 +27,11 @@ import { ADMINS } from '../../../../admin.config';
 export class FormComponent {
   username: string ="";
   password: string ="";
+  mailResetPassword: string="";
+  @Output() isForRegister= new EventEmitter<boolean>();
+  visible: boolean=false;
+
+  emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
   constructor( private _authService: AuthService, private _msgService: MessageService, private _router: Router){}
 
@@ -85,4 +93,30 @@ export class FormComponent {
     })
   }
   
+  setRegister(){
+    this.isForRegister.emit(false);
+  }
+
+  openModal(){
+    this.visible=!this.visible
+  }
+
+  async ResetPassword(){
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const valid = emailRegex.test(this.mailResetPassword);
+    if(!valid){
+      this._msgService.add({severity: 'error', detail: `'invalidEmail': ${this.mailResetPassword}`})
+      return
+    }
+
+    (await this._authService.resetPassword(this.mailResetPassword)).subscribe(response=>{
+      console.log(response);
+      this._msgService.add({severity: 'info', detail: 'Correo enviado para reinicio de contraseña'})
+      this.visible=false
+    }, err=> {
+      
+      this._msgService.add({severity: 'error', detail: 'Error enviando correo para reinicio de contraseña'})
+    })
+  }
+
 }
